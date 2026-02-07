@@ -1,270 +1,297 @@
-<link rel="stylesheet" type="text/css" href="./resources/style.css" media="screen" />
-<link rel="stylesheet" href="resources/dics.original.css">
-
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <title>
-        NoKSR: Kernel-free Neural Surface Reconstruction via Point Cloud Serialization
-    </title>
-    <meta property="og:title"
-        content="NoKSR: Kernel-Free Neural Surface Reconstruction via Point Cloud Serialization" />
-    <meta property="og:image" content="./resources/paper.png"/>
-  	<meta property="og:description" content="
-      A multi-scale, point-based surface reconstruction method that leverages point cloud serialization for fast neighbor approximation." />
-    <meta property="twitter:card"          content="summary" />
-    <meta property="twitter:title"         content="NoKSR: Kernel-free Neural Surface Reconstruction via Point Cloud Serialization" />
-    <meta property="twitter:description"   content="A multi-scale, point-based surface reconstruction method that leverages point cloud serialization for fast neighbor approximation." />
-    <meta property="twitter:image"         content="./resources/paper.png" />
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <title>Visualization</title>
     <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
+            background-color: #1a1a1a;
+            font-family: Arial, sans-serif;
+            color: #fff;
+            padding: 40px 20px;
+        }
+
+        /* Page Title */
+        .page-title {
             text-align: center;
-            background-color: #ffffff; /* Optional: Set a background color for better visibility */
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 60px;
+            color: #fff;
         }
-        .larger-arrow {
-            font-size: 2.0em; /* Adjust the font size as needed */
-            letter-spacing: 4.0em; /* Adjust the letter spacing as needed */
-            display: inline-block; /* Ensures text-align works */
+
+        /* Main content container */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 80px;
+            max-width: 1600px;
+            margin: 0 auto;
         }
-    </style> 
-    <script src="resources/js/video_comparison.js"></script>    
-    <script src="resources/js/dics.original.js"></script>
+
+        /* Each row section */
+        .row-section {
+            display: flex;
+            flex-direction: row;
+            gap: 40px;
+            align-items: flex-start;
+        }
+
+        /* Vertical splitter between left and right */
+        .vertical-splitter {
+            width: 2px;
+            background: linear-gradient(to bottom, transparent, #555, transparent);
+            align-self: stretch;
+            min-height: 300px;
+        }
+
+        /* Left part - comparison video */
+        .left-part {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Right part - single video */
+        .right-part {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Video section title */
+        .video-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+            color: #fff;
+        }
+
+        /* Video container */
+        .video-compare-container {
+            width: 100%;
+            margin: 0 auto;
+            position: relative;
+            display: block;
+            line-height: 0;
+        }
+
+        .video {
+            width: 100%;
+            height: auto;
+            position: relative;
+            top: 0;
+            left: 0;
+        }
+
+        .videoMerge {
+            position: relative;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            width: 100%;
+            display: block;
+            margin: 0 auto;
+            background-size: cover;
+        }
+
+        /* Single video container */
+        .single-video-container {
+            width: 100%;
+            position: relative;
+        }
+
+        .single-video-container video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Labels for comparison */
+        .labels {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .label {
+            padding: 8px 16px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 4px;
+        }
+
+        /* Caption below video */
+        .caption {
+            margin-top: 15px;
+            color: #aaa;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        /* Horizontal splitter between rows */
+        .horizontal-splitter {
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #555, transparent);
+        }
+    </style>
+    <script src="resources/js/video_comparison.js"></script>
 </head>
-
 <body>
-    <div class="container">
-        <div class="title">
-            NoKSR: Kernel-Free Neural Surface Reconstruction <br> via Point Cloud Serialization
+    <!-- Page Title -->
+    <h1 class="page-title">Visualization</h1>
+
+    <div class="main-content">
+        <!-- Row 1: Ours vs MERL Part 1 -->
+        <div class="row-section">
+            <!-- Left: Comparison Video with Slider -->
+            <div class="left-part">
+                <h2 class="video-title">Part 1: MERL(PSNR 22.0) vs Ours (PSNR 26.1)</h2>
+                <div class="video-compare-container" id="compare1Div">
+                    <video class="video" id="compare1" loop playsinline autoPlay muted
+                        src="./resources/videos/Ours_MERL_1.mp4" onplay="resizeAndPlay(this)"></video>
+                    <canvas height=0 class="videoMerge" id="compare1Merge"></canvas>
+                </div>
+                <div class="labels">
+                    <span class="label">MERL</span>
+                    <span class="label">Ours</span>
+                </div>
+                <p class="caption">Comparison: MERL vs Ours - Frames 1-120: The model learned from the MERL dataset has a mosaic appearance</p>
+            </div>
+
+            <!-- Vertical Splitter -->
+            <div class="vertical-splitter"></div>
+
+            <!-- Right: Single Video -->
+            <div class="right-part">
+                <h2 class="video-title">Light (Part 1)</h2>
+                <div class="single-video-container">
+                    <video loop playsinline autoPlay muted>
+                        <source src="./resources/videos/Light_video_1.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <p class="caption">Light visualization - Frames 1-120</p>
+            </div>
         </div>
 
-        <br><br>
-        <div class="author">
-            <a href="http://colinzhenli.github.io" target="_blank">Zhen (Colin) Li</a> <sup>1*</sup> 
-        </div>
-        <div class="author">
-            <a href="https://wsunid.github.io/" target="_blank">Weiwei Sun</a> <sup>2,3*†</sup>
-        </div>
-        <div class="author">
-            <a href="https://shrisudhan.github.io/" target="_blank">Shrisudhan Govindarajan</a> <sup>1</sup>  
-        </div>
-        <div class="author">
-            <a href="https://scholar.google.com/citations?user=eOPO9E0AAAAJ&hl=en" target="_blank">Shaobo Xia</a> <sup>4</sup> 
-        </div>
-        <div class="author">
-            <a href="http://drebain.com/" target="_blank">Daniel Rebain</a> <sup>2</sup> 
-        </div>
-        <div class="author">
-            <a href="https://www.cs.ubc.ca/~kmyi" target="_blank">Kwang Moo Yi</a> <sup>2</sup> 
-        </div>
-    
-        <div class="author">
-            <a href="https://taiya.github.io" target="_blank">Andrea Tagliasacchi</a> <sup>1,5,6</sup>
+        <!-- Horizontal Splitter -->
+        <div class="horizontal-splitter"></div>
+
+        <!-- Row 2: Ours vs MERL Part 2 -->
+        <div class="row-section">
+            <!-- Left: Comparison Video with Slider -->
+            <div class="left-part">
+                <h2 class="video-title">Part 2: MERL(PSNR 22.0) vs Ours (PSNR 26.1)</h2>
+                <div class="video-compare-container" id="compare2Div">
+                    <video class="video" id="compare2" loop playsinline autoPlay muted
+                        src="./resources/videos/Ours_MERL_2.mp4" onplay="resizeAndPlay(this)"></video>
+                    <canvas height=0 class="videoMerge" id="compare2Merge"></canvas>
+                </div>
+                <div class="labels">
+                    <span class="label">MERL</span>
+                    <span class="label">Ours</span>
+                </div>
+                <p class="caption">Comparison: MERL vs Ours - Frames 121-240: The model learned from the MERL dataset has noisy highlight dots</p>
+            </div>
+
+            <!-- Vertical Splitter -->
+            <div class="vertical-splitter"></div>
+
+            <!-- Right: Single Video -->
+            <div class="right-part">
+                <h2 class="video-title">Light (Part 2)</h2>
+                <div class="single-video-container">
+                    <video loop playsinline autoPlay muted>
+                        <source src="./resources/videos/Light_video_2.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <p class="caption">Light visualization - Frames 121-240</p>
+            </div>
         </div>
 
-        <br><br>
-        <div class="affiliation_group">
-            <div class="affiliation_1"><sup>1</sup> Simon Fraser University</div>
-            <div class="affiliation_1"><sup>2</sup> University of British Columbia</div>
-            <div class="affiliation_1"><sup>3</sup> Amazon</div>
-        </div>
-        <div class="affiliation_group">
-            <div class="affiliation_2"><sup>4</sup> Changsha University of Science and Technology</div>
-            <div class="affiliation_2"><sup>5</sup> University of Toronto</div>
-            <div class="affiliation_2"><sup>6</sup> Google DeepMind</div>
-        </div>
-        <div style="font-size: 0.9em;">* Co-first author</div>
-        <div style="font-size: 0.9em;">† Work done while at UBC</div>
+        <!-- Horizontal Splitter -->
+        <div class="horizontal-splitter"></div>
 
-        <div class="venue">
-            <strong>International Conference on 3D Vision (3DV) 2025</strong>
-        </div>
-        <br>
-        
-        <br>
-        <div class="icon-links">
-            <div class="icon-link">
-                <a href="resources/paper.pdf" title="Paper" target="_blank">
-                    <img src="resources/icons/paper.png" alt="Paper" class="icon"/>
-                </a>
-                <div class="icon-label">Paper</div>
+        <!-- Row 3: Ours vs PBR Part 1 -->
+        <div class="row-section">
+            <!-- Left: Comparison Video with Slider -->
+            <div class="left-part">
+                <h2 class="video-title">Part 1: Anisotropic PBR(PSNR 24.1) vs Ours (PSNR 26.1)</h2>
+                <div class="video-compare-container" id="compare3Div">
+                    <video class="video" id="compare3" loop playsinline autoPlay muted
+                        src="./resources/videos/Ours_PBR_1.mp4" onplay="resizeAndPlay(this)"></video>
+                    <canvas height=0 class="videoMerge" id="compare3Merge"></canvas>
+                </div>
+                <div class="labels">
+                    <span class="label">PBR</span>
+                    <span class="label">Ours</span>
+                </div>
+                <p class="caption">Ours has more consistent highlight changes, while PBR has inconsistent highlight changes between pixels</p>
             </div>
-            <div class="icon-link">
-                <a href="https://arxiv.org/abs/2502.12534" title="ArXiv" target="_blank">
-                    <img src="resources/icons/arxiv.png" alt="ArXiv" class="icon"/>
-                </a>
-                <div class="icon-label">ArXiv</div>
-            </div>
-            <div class="icon-link">
-                <a href="https://github.com/theialab/noksr" title="Code" target="_blank">
-                    <img src="resources/icons/github.png" alt="Code" class="icon"/>
-                </a>
-                <div class="icon-label">Code</div>
-            </div>
-        </div>
-        <br><br>
 
-        <hr>
-        <br>
-        <p style="width: 80%;">
-            <b>TL;DR:</b>
-            A multi-scale, point-based surface reconstruction method that leverages point cloud serialization for fast neighbor approximation.
-        </p>
-        <br> 
-        <div class="parent-video-compare-container">
-            <div class="video-compare-container" id="materialsDiv">
-                <video class="video" id="materials" loop playsinline autoPlay muted
-                  src="./resources/Carla/Carla-14_Reconstruction_slow.mp4" onplay="resizeAndPlay(this)"></video>
-                <canvas height=0 class="videoMerge" id="materialsMerge"></canvas>
+            <!-- Vertical Splitter -->
+            <div class="vertical-splitter"></div>
+
+            <!-- Right: Single Video -->
+            <div class="right-part">
+                <h2 class="video-title">Light (Part 1)</h2>
+                <div class="single-video-container">
+                    <video loop playsinline autoPlay muted>
+                        <source src="./resources/videos/Light_video_1.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <p class="caption">Light visualization - Frames 1-120</p>
             </div>
         </div>
-        <br> 
-        <br> 
-        <p style="width: 80%;">
-            Note: Reconstruction results of Carla subset. 
-        </p>
-        <br> 
-        <hr>
-        <h1>Paper</h1>
-            <div class="paper-thumbnail">
-                <a href="resources/paper.pdf">
-                    <img class="layered-paper-big" width="100%" src="./resources/paper.png" alt="Paper thumbnail"/>
-                </a>
+
+        <!-- Horizontal Splitter -->
+        <div class="horizontal-splitter"></div>
+
+        <!-- Row 4: Ours vs PBR Part 2 -->
+        <div class="row-section">
+            <!-- Left: Comparison Video with Slider -->
+            <div class="left-part">
+                <h2 class="video-title">Part 2: Anisotropic PBR(PSNR 24.1) vs Ours (PSNR 26.1)</h2>
+                <div class="video-compare-container" id="compare4Div">
+                    <video class="video" id="compare4" loop playsinline autoPlay muted
+                        src="./resources/videos/Ours_PBR_2.mp4" onplay="resizeAndPlay(this)"></video>
+                    <canvas height=0 class="videoMerge" id="compare4Merge"></canvas>
+                </div>
+                <div class="labels">
+                    <span class="label">PBR</span>
+                    <span class="label">Ours</span>
+                </div>
+                <p class="caption">PBR has unrealistically vanishing highlight dots in the first frames, while ours is more consistent with respect to light direction changes</p>
             </div>
-            <div class="paper-info">
-                <h3> NoKSR: Kernel-Free Neural Surface Reconstruction via Point Cloud Serialization</h3>
-                <p>Zhen Li, Weiwei Sun, Shrisudhan Govindarajan, Shaobo Xia, Daniel Rebain, Kwang Moo Yi, Andrea Tagliasacchi</p>
-                <p>arXiv.</p>
-                <pre><code>@misc{li2025noksrkernelfreeneuralsurface,
-                    title={NoKSR: Kernel-Free Neural Surface Reconstruction via Point Cloud Serialization}, 
-                    author={Zhen Li and Weiwei Sun and Shrisudhan Govindarajan and Shaobo Xia and Daniel Rebain and Kwang Moo Yi and Andrea Tagliasacchi},
-                    year={2025},
-                    eprint={2502.12534},
-                    archivePrefix={arXiv},
-                    primaryClass={cs.CV},
-                    url={https://arxiv.org/abs/2502.12534}, 
-              }
-                </code></pre>
-            </div>
-        <br>
-        <hr>
-        <h1>Abstract</h1>
-        <p style="width: 80%;text-align: justify;">
-        We present a novel approach to large-scale point cloud
-        surface reconstruction by developing an efficient framework
-        that converts an irregular point cloud into a signed distance
-        field (SDF). Our backbone builds upon recent transformer-
-        based architectures (i.e. PointTransformerV3), that serial-
-        izes the point cloud into a locality-preserving sequence of
-        tokens. We efficiently predict t he SDF value at a point by ag-
-        gregating nearby tokens, where fast approximate neighbors
-        can be retrieved thanks to the serialization. We serialize
-        the point cloud at different levels/scales, and non-linearly
-        aggregate a feature to predict the SDF value. We show
-        that aggregating across multiple scales is critical to over-
-        come the approximations introduced by the serialization
-        (i.e. false negatives in the neighborhood). Our frameworks
-        sets the new state-of-the-art in terms of accuracy and effi-
-        ciency (better or similar performance with half the latency
-        of the best prior method, coupled with a simpler implemen-
-        tation), particularly on outdoor datasets where sparse-grid
-        methods have shown limited performance.
-        </p>
-        <br>    
-        <hr>
-        <h1>Method</h1>
-        <img style="width: 80%;" src="resources/figures/overview.png" alt="Method Overview" />
-        <br><br>
-        <p style="width: 80%;text-align: justify;">
-        <b>Overview</b>: We map a sparse input point cloud with a point cloud backbone into a point feature hierarchy, from which
-        we compute the signed distance of a query. At each level, we utilize the efficient procedure to retrieve local
-        neighborhoods of the query. We then compute per-level features with the aggregation module. At last, we sum
-        per-level features and convert it into the signed distance with an MLP.
-        </p>
-        <br>
-        <img style="width: 80%;" src="resources/figures/neighborhood.png" alt="Neighborhood Function" />
-        <br><br>
-        <p style="width: 80%;text-align: justify;">
-        <b> Neighborhood function</b>: (left) retrieving a local neighborhood with K-nearest neighbor(KNN) or ball-query methods is
-        challenging to implement efficiently on GPU hardware. (right) we
-        propose to retrieve a neighborhood from a 1-D ordered list, by
-        serializing points along a Hibert curve, and excluding the impact of points distant from the query (i.e. remove false positives).
-        </p>
-        <br>
-        <hr>
-        <h1>NKSR <font color="red">vs</font> NoKSR(ours)</h1>
-        <p style="width: 80%; text-align: justify;">
-            We compare NoKSR(ours) with baselines including Neural Kernel Surface Reconstruction (NKSR). Our method achieves high quality surface reconstructions
-            which preserve more details than NKSR, which loses information due to quantization for large and non-uniformly sampled datasets
-            like Carla. 
-            Note that we can move <font color="blue"> slider left and right </font> to see the comparison.    
-        </p>
-        <br> 
-        <div class="parent-video-compare-container">
-            <div class="b-dics", style="width: 100%; font-weight: 600;">
-                <img src="resources/Carla/Cropped_Carla_Original_Input_36.png" alt="Input point cloud">
-                <img src="resources/Carla/Cropped_Carla_Original_NKSR_36.png" alt="NKSR">
-                <img src="resources/Carla/Cropped_Carla_Original_Ours_36.png" alt="NoKSR">
-                <img src="resources/Carla/Cropped_Carla_Original_Ours_Lap_36.png" alt="NoKSR (Smoother) with Laplacian loss">
+
+            <!-- Vertical Splitter -->
+            <div class="vertical-splitter"></div>
+
+            <!-- Right: Single Video -->
+            <div class="right-part">
+                <h2 class="video-title">Light (Part 2)</h2>
+                <div class="single-video-container">
+                    <video loop playsinline autoPlay muted>
+                        <source src="./resources/videos/Light_video_2.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <p class="caption">Light visualization - Frames 121-240</p>
             </div>
         </div>
-        <br> 
-        <br> 
-        <hr>
-        <h1>More Reconstruction Results</h1>
-        <div class="container">
-            <div class="left_title">Outdoor Scene: Carla</div>
-            <img style="width: 80%;" src="resources/More_results/Carla.png"/>
-        </div>        
-        <br> 
-        <br> 
-        <div class="container">
-            <div class="left_title">Indoor Scene: ScanNet</div>
-            <img style="width: 80%;" src="resources/More_results/ScanNet.png"/>
-        </div>   
-        <br> 
-        <br> 
-        <div class="container">
-            <div class="left_title">Indoor Scene: SyntheticRoom</div>
-            <img style="width: 80%;" src="resources/More_results/Synthetic.png"/>
-        </div>   
-
-        <hr>
-        <h1>Acknowledgements</h1> 
-        <p style="width: 80%;text-align: justify;">
-        This work was supported in part by the Natural Sciences and Engineering Research Council of Canada (NSERC) Discovery Grant, NSERC Collaborative Research and Development Grant, Google DeepMind, Digital Research Alliance of Canada, the Advanced Research Computing at the University of British Columbia, and the SFU Visual Computing Research Chair program. Shaobo Xia was supported by National Natural Science Foundation of China under Grant 42201481. We would also like to thank Jiahui Huang for the valuable discussion and feedback.
-        </p>
-
-    <br><br>
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Get all video elements with the class 'myVideo'
-            var videos = document.querySelectorAll('.kitti360');
-    
-            // Set the playback rate for each video
-            videos.forEach(function(video) {
-                video.playbackRate = 0.3; // Adjust the playback rate as needed
-            });
-
-            new Dics({
-                container: document.querySelectorAll('.b-dics')[0],
-                hideTexts: false,
-                textPosition: "bottom",
-                // linesColor: 'rgb(0,0,0)'
-            });
-            // new Dics({
-            //     container: document.querySelectorAll('.b-dics')[1],
-            //     hideTexts: false,
-            //     textPosition: "bottom"
-            // });
-        });
-        initComparisons();
-    </script>
-    <br><br><br>
-
 </body>
-
 </html>
